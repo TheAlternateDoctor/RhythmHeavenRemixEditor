@@ -51,9 +51,8 @@ class FolderChangeWarningScreen(main: RHREfreshApplication) : ToolboksScreen<RHR
             this.isLocalizationKey = false
             this.textWrapping = false
             this.text = when(RHREfresh.CURRENT_OS) {
-                RHREfresh.OS.WINDOWS -> Localization["screen.folderChangeWarning.content", "%USERPROFILE%/"+RHREfresh.RHREFRESH_FOLDER]
-                RHREfresh.OS.LINUX -> Localization["screen.folderChangeWarning.content", "~/"+RHREfresh.RHREFRESH_FOLDER]
-                RHREfresh.OS.MACOS -> TODO()
+                RHREfresh.OS.WINDOWS -> Localization["screen.folderChangeWarning.content", System.getProperty("user.home", "???")+"\\"+RHREfresh.RHREFRESH_FOLDER]
+                RHREfresh.OS.LINUX,RHREfresh.OS.MACOS -> Localization["screen.folderChangeWarning.content", "~/"+RHREfresh.RHREFRESH_FOLDER]
                 RHREfresh.OS.UNKNOWN -> Localization["screen.folderChangeWarning.content", RHREfresh.RHREFRESH_FOLDER]
             }
 
