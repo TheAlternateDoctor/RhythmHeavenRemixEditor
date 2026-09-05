@@ -87,7 +87,7 @@ class DefaultAssetLoader : AssetRegistry.IAssetLoader {
         AssetRegistry.loadAsset<Texture>("ui_icon_tab_favourites", "images/ui/icons/favourites_tab.png", linearTexture())
         AssetRegistry.loadAsset<Texture>("ui_icon_tab_custom", "images/ui/icons/custom_tab.png", linearTexture())
         AssetRegistry.loadAsset<Texture>("ui_icon_tab_recents", "images/ui/icons/recents_tab.png", linearTexture())
-        AssetRegistry.loadAsset<Texture>("ui_icon_tab_stored_patterns", "images/ui/icons/stored_patterns.png", linearTexture())
+        AssetRegistry.loadAsset<Texture>("ui_icon_clipboard", "images/ui/icons/clipboard.png", linearTexture())
         AssetRegistry.loadAsset<Texture>("ui_icon_discord", "images/ui/icons/discord_logo_white.png", linearTexture())
         AssetRegistry.loadAsset<Texture>("ui_icon_sfx_volume", "images/ui/icons/sfx_volume.png", linearTexture())
         AssetRegistry.loadAsset<Texture>("ui_icon_volume", "images/ui/icons/volume.png", linearTexture())

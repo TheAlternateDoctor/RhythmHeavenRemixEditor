@@ -812,23 +812,38 @@ class EditorStage(parent: UIElement<EditorScreen>?,
                     this.fontScaleMultiplier = 0.9f
                 }
                 pickerStage.elements += gameStageText
-                customSoundsFolderButton = Button(palette, pickerStage, pickerStage).apply {
-                    setLocation(Editor.ICON_COUNT_X, 0)
-                    this.location.set(screenY = 0.5f - this.location.screenHeight / 2f)
-                    this.addLabel(ImageLabel(palette, this, this.stage).apply {
-                        renderType = ImageLabel.ImageRendering.ASPECT_RATIO
-                        image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_folder"))
-                    })
-                    this.leftClickAction = { _, _ ->
-                        Desktop.getDesktop().open(SFXDatabase.CUSTOM_SFX_FOLDER.file())
-                    }
-                    this.tooltipTextIsLocalizationKey = true
-                    this.tooltipText = "editor.customSfx.openFolder"
-                    this.visible = false
-                }
                 if(RHREfresh.CURRENT_OS != RHREfresh.OS.MACOS){
-                    pickerStage.elements += customSoundsFolderButton
+                    customSoundsFolderButton = Button(palette, pickerStage, pickerStage).apply {
+                        setLocation(Editor.ICON_COUNT_X, 0)
+                        this.location.set(screenY = 0.5f - this.location.screenHeight / 2f)
+                        this.addLabel(ImageLabel(palette, this, this.stage).apply {
+                            renderType = ImageLabel.ImageRendering.ASPECT_RATIO
+                            image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_folder"))
+                        })
+                        this.leftClickAction = { _, _ ->
+                            Desktop.getDesktop().open(SFXDatabase.CUSTOM_SFX_FOLDER.file())
+                        }
+                        this.tooltipTextIsLocalizationKey = true
+                        this.tooltipText = "editor.customSfx.openFolder"
+                        this.visible = false
+                    }
+                } else {
+                    customSoundsFolderButton = Button(palette, pickerStage, pickerStage).apply {
+                        setLocation(Editor.ICON_COUNT_X, 0)
+                        this.location.set(screenY = 0.5f - this.location.screenHeight / 2f)
+                        this.addLabel(ImageLabel(palette, this, this.stage).apply {
+                            renderType = ImageLabel.ImageRendering.ASPECT_RATIO
+                            image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_clipboard"))
+                        })
+                        this.leftClickAction = { _, _ ->
+                            Gdx.app.clipboard.contents = SFXDatabase.CUSTOM_SFX_FOLDER.path()
+                        }
+                        this.tooltipTextIsLocalizationKey = true
+                        this.tooltipText = "editor.customSfx.copyFolder"
+                        this.visible = false
+                    }
                 }
+                pickerStage.elements += customSoundsFolderButton
 
                 for (y in 0 until Editor.ICON_COUNT_Y) {
                     for (x in 0 until Editor.ICON_COUNT_X + 3) {
@@ -1242,7 +1257,7 @@ class EditorStage(parent: UIElement<EditorScreen>?,
                         screenHeight = buttonHeight,
                         screenX = filterButtons.size * buttonWidth
                                  )
-                this.label.image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_tab_stored_patterns"))
+                this.label.image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_clipboard"))
             }
             minimapBarStage.elements.addAll(filterButtons)
 

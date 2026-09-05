@@ -263,6 +263,22 @@ class ThemeEditorStage(val editor: Editor, val palette: UIPalette, parent: Theme
                         }
                     }
                 }
+            } else {
+                buttonBar.elements += Button(palette, buttonBar, buttonBar).apply {
+                    this.location.set(0f, 0f, 0f, 1f, 34f * 3 + 4f * 3, 0f, 34f, 0f)
+                    this.addLabel(ImageLabel(palette, this, this.stage).apply {
+                        this.renderType = ImageLabel.ImageRendering.ASPECT_RATIO
+                        this.image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_clipboard"))
+                    })
+                    this.tooltipTextIsLocalizationKey = true
+                    this.tooltipText = "editor.themeEditor.copyContainingFolder"
+                    leftClickAction = { _, _ ->
+                        val f = themeFile
+                        if (f != null) {
+                            Gdx.app.clipboard.contents = f.parent().path()
+                        }
+                    }
+                }
             }
         }
 

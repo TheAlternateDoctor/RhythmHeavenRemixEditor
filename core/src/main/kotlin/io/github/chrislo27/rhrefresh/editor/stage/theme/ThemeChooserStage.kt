@@ -1,5 +1,6 @@
 package io.github.chrislo27.rhrefresh.editor.stage.theme
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -149,6 +150,19 @@ class ThemeChooserStage(val editor: Editor, val palette: UIPalette, parent: Edit
                     }
                     this.tooltipTextIsLocalizationKey = true
                     this.tooltipText = "editor.themeEditor.openContainingFolder"
+                }
+            } else {
+                this.elements += Button(palette, this, this.stage).apply {
+                    this.location.set(0f, 0f, 0f, 1f, 346f - 34f, 0f, 34f, 0f)
+                    this.addLabel(ImageLabel(palette, this, this.stage).apply {
+                        this.renderType = ImageLabel.ImageRendering.ASPECT_RATIO
+                        this.image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_clipboard"))
+                    })
+                    this.leftClickAction = { _, _ ->
+                        Gdx.app.clipboard.contents = LoadedThemes.THEMES_FOLDER.path()
+                    }
+                    this.tooltipTextIsLocalizationKey = true
+                    this.tooltipText = "editor.themeEditor.copyContainingFolder"
                 }
             }
         }

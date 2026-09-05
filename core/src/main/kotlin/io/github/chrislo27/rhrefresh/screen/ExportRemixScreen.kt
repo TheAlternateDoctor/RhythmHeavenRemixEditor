@@ -164,25 +164,46 @@ class ExportRemixScreen(main: RHREfreshApplication)
             this.location.set(screenX = 0.225f, screenWidth = 0.55f)
         }
         stage.bottomStage.elements += readyButton
-        
-        folderButton = Button(palette, stage.bottomStage, stage.bottomStage).apply {
-            this.addLabel(ImageLabel(palette, this, this.stage).apply {
-                this.image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_folder"))
-            })
-            this.leftClickAction = { _, _ ->
-                val ff = folderFile
-                if (ff != null) {
-                    Desktop.getDesktop().open(ff.takeUnless { it.isFile } ?: ff.parentFile)
-                }
-            }
-            this.visible = false
-            
-            this.location.set(this@ExportRemixScreen.stage.backButton.location)
-            this.location.set(screenX = 1f - this.location.screenWidth)
-        }
+
         if(RHREfresh.CURRENT_OS != RHREfresh.OS.MACOS) {
-            stage.bottomStage.elements += folderButton
+            folderButton = Button(palette, stage.bottomStage, stage.bottomStage).apply {
+                this.addLabel(ImageLabel(palette, this, this.stage).apply {
+                    this.image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_folder"))
+                })
+                this.leftClickAction = { _, _ ->
+                    val ff = folderFile
+                    if (ff != null) {
+                        Desktop.getDesktop().open(ff.takeUnless { it.isFile } ?: ff.parentFile)
+                    }
+                }
+                this.tooltipTextIsLocalizationKey = true
+                this.tooltipText = "screen.export.openFolder"
+                this.visible = false
+
+                this.location.set(this@ExportRemixScreen.stage.backButton.location)
+                this.location.set(screenX = 1f - this.location.screenWidth)
+            }
+        } else {
+            folderButton = Button(palette, stage.bottomStage, stage.bottomStage).apply {
+                this.addLabel(ImageLabel(palette, this, this.stage).apply {
+                    this.image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_clipboard"))
+                })
+                this.tooltipTextIsLocalizationKey = true
+                this.tooltipText = "screen.export.copyFolder"
+                this.leftClickAction = { _, _ ->
+                    val ff = folderFile
+                    if (ff != null) {
+                        Gdx.app.clipboard.contents = ff.parentFile.absolutePath
+                    }
+                }
+                this.visible = false
+
+                this.location.set(this@ExportRemixScreen.stage.backButton.location)
+                this.location.set(screenX = 1f - this.location.screenWidth)
+            }
         }
+        stage.bottomStage.elements += folderButton
+
         copyGamesButton = object: Button<ExportRemixScreen>(palette, stage.bottomStage, stage.bottomStage){
             val strings: List<String> = listOf("Copy\ngames", "[CYAN]Copied![]", "No\ngames...")
             override fun onLeftClick(xPercent: Float, yPercent: Float) {

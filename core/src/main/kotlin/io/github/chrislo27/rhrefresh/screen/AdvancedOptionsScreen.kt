@@ -249,6 +249,24 @@ class AdvancedOptionsScreen(main: RHREfreshApplication) : ToolboksScreen<RHREfre
                     Desktop.getDesktop().open(SFXDatabase.CUSTOM_MODDING_METADATA_FOLDER.file())
                 }
             }
+        } else {
+
+            centre.elements += Button(palette, centre, centre).apply {
+                val width = buttonWidth * 0.09f
+                this.location.set(
+                    screenX = padding * 0.5f - width,
+                    screenY = padding * 8 + buttonHeight * 7,
+                    screenWidth = width,
+                    screenHeight = buttonHeight
+                )
+                this.addLabel(ImageLabel(palette, this, this.stage).apply {
+                    renderType = ImageLabel.ImageRendering.ASPECT_RATIO
+                    image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_clipboard"))
+                })
+                this.leftClickAction = { _, _ ->
+                    Gdx.app.clipboard.contents = SFXDatabase.CUSTOM_MODDING_METADATA_FOLDER.path()
+                }
+            }
         }
 
         centre.elements += object : UIElement<AdvancedOptionsScreen>(centre, centre) {

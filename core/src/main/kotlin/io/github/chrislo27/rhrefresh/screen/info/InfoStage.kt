@@ -163,6 +163,25 @@ class InfoStage(parent: UIElement<InfoScreen>?, camera: OrthographicCamera, val 
                 this.tooltipTextIsLocalizationKey = true
                 this.tooltipText = "editor.customSfx.openFolder"
             }
+        } else {
+
+            info.elements += Button(palette, info, info).apply {
+                this.location.set(
+                    screenX = 1f - (padding + buttonWidth),
+                    screenY = 1f - (padding + buttonHeight * 0.8f) * 3,
+                    screenWidth = buttonWidth * 0.085f,
+                    screenHeight = buttonHeight * 0.8f
+                )
+                this.addLabel(ImageLabel(palette, this, this.stage).apply {
+                    renderType = ImageLabel.ImageRendering.ASPECT_RATIO
+                    image = TextureRegion(AssetRegistry.get<Texture>("ui_icon_clipboard"))
+                })
+                this.leftClickAction = { _, _ ->
+                    Gdx.app.clipboard.contents = SFXDatabase.CUSTOM_SFX_FOLDER.path()
+                }
+                this.tooltipTextIsLocalizationKey = true
+                this.tooltipText = "editor.customSfx.copyFolder"
+            }
         }
 
         // Donate button
