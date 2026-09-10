@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.utils.Align
 import io.github.chrislo27.rhrefresh.PreferenceKeys
 import io.github.chrislo27.rhrefresh.RHREfresh
 import io.github.chrislo27.rhrefresh.RHREfreshApplication
@@ -258,6 +259,50 @@ class InfoStage(parent: UIElement<InfoScreen>?, camera: OrthographicCamera, val 
                               screenY = padding,
                               screenWidth = buttonWidth,
                               screenHeight = buttonHeight)
+        }
+
+
+        // Open logs
+        if(RHREfresh.CURRENT_OS != RHREfresh.OS.MACOS){
+            info.elements += object : Button<InfoScreen>(palette, info, info) {
+
+                override fun onLeftClick(xPercent: Float, yPercent: Float) {
+                    Desktop.getDesktop().open(RHREfresh.RHREFRESH_FOLDER.child("logs").file())
+                }
+            }.apply {
+                addLabel(TextLabel(palette, this, this.stage).apply {
+                    this.fontScaleMultiplier = fontScale
+                    this.isLocalizationKey = true
+                    this.textWrapping = false
+                    this.textAlign = Align.center
+                    this.text = "screen.info.openLogs"
+                })
+
+                this.location.set(screenX = padding,
+                    screenY = padding * 4 + buttonHeight * 3,
+                    screenWidth = buttonWidth,
+                    screenHeight = buttonHeight)
+            }
+        } else {
+            info.elements += object : Button<InfoScreen>(palette, info, info) {
+
+                override fun onLeftClick(xPercent: Float, yPercent: Float) {
+                    Gdx.app.clipboard.contents = RHREfresh.RHREFRESH_FOLDER.child("logs").path()
+                }
+            }.apply {
+                addLabel(TextLabel(palette, this, this.stage).apply {
+                    this.fontScaleMultiplier = fontScale
+                    this.isLocalizationKey = true
+                    this.textWrapping = false
+                    this.textAlign = Align.center
+                    this.text = "screen.info.copyLogs"
+                })
+
+                this.location.set(screenX = padding,
+                    screenY = padding * 4 + buttonHeight * 3,
+                    screenWidth = buttonWidth,
+                    screenHeight = buttonHeight)
+            }
         }
 
 
