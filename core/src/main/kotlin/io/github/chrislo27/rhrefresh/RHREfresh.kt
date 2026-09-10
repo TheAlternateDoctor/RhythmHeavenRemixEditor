@@ -1,6 +1,7 @@
 package io.github.chrislo27.rhrefresh
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.files.FileHandle
 import io.github.chrislo27.rhrefresh.util.ExportOptions
 import io.github.chrislo27.toolboks.version.Version
@@ -75,6 +76,8 @@ object RHREfresh {
     const val RELEASE_API_URL = "https://api.github.com/repos/TheAlternateDoctor/RhythmHeavenRemixEditor/releases/latest"
     const val OUT_OF_MEMORY_DOC_LINK: String = "https://docs.rhre.dev/Out-of-memory-on-music/"
     const val DOCS_URL: String = "https://rhre.readthedocs.io/en/latest/"
+
+    lateinit var PREFERENCES: Preferences
 
     val RHRE_ANNIVERSARY: LocalDate = LocalDate.of(2016, Month.MAY, 29)
     private val RHRE3_ANNIVERSARY: LocalDate = LocalDate.of(2017, Month.AUGUST, 30)

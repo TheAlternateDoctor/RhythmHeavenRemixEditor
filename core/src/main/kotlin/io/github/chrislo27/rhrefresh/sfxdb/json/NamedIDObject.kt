@@ -86,6 +86,9 @@ class GameObject {
     var priority: Int = 0
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    var gameOrder: Int = -1
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     var searchHints: List<String>? = null
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)

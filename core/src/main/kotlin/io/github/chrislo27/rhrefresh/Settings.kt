@@ -15,6 +15,7 @@ import io.github.chrislo27.rhrefresh.PreferenceKeys.SETTINGS_MINIMAP_PREVIEW
 import io.github.chrislo27.rhrefresh.PreferenceKeys.SETTINGS_SMOOTH_DRAGGING
 import io.github.chrislo27.rhrefresh.PreferenceKeys.SETTINGS_SUBTITLE_ORDER
 import io.github.chrislo27.rhrefresh.PreferenceKeys.SETTINGS_NEW_TRACKS_ON_TOP
+import io.github.chrislo27.rhrefresh.PreferenceKeys.SETTINGS_ORDER_BY_GAME_ORDER
 import io.github.chrislo27.rhrefresh.PreferenceKeys.THEME_USES_MENU
 import io.github.chrislo27.rhrefresh.editor.CameraBehaviour
 import io.github.chrislo27.rhrefresh.editor.Editor
@@ -35,7 +36,8 @@ class Settings(private val main: RHREfreshApplication) {
     var cameraBehaviour: CameraBehaviour = Editor.DEFAULT_CAMERA_BEHAVIOUR
     var gameBoundaries: Boolean = false
     var newTracksOnTop: Boolean = true //
-    
+    var orderByGameOrder: Boolean = true //
+
     var advExplodingEntities: Boolean = false
     var advIgnorePitchRestrictions: Boolean = false
 
@@ -56,6 +58,7 @@ class Settings(private val main: RHREfreshApplication) {
         chorusKids = preferences.getBoolean(SETTINGS_CHORUS_KIDS, chorusKids)
         gameBoundaries = preferences.getBoolean(SETTINGS_GAME_BOUNDARIES, gameBoundaries)
         newTracksOnTop = preferences.getBoolean(SETTINGS_NEW_TRACKS_ON_TOP, newTracksOnTop)
+        orderByGameOrder = preferences.getBoolean(SETTINGS_ORDER_BY_GAME_ORDER, orderByGameOrder)
         midiNote = preferences.getString(MIDI_NOTE, midiNote)
         val oldChaseCamera = "settings_chaseCamera"
         if (oldChaseCamera in preferences) {
@@ -87,6 +90,8 @@ class Settings(private val main: RHREfreshApplication) {
                 .putBoolean(SETTINGS_CHORUS_KIDS, chorusKids)
                 .putBoolean(SETTINGS_GAME_BOUNDARIES, gameBoundaries)
                 .putString(MIDI_NOTE, midiNote)
+                .putBoolean(SETTINGS_NEW_TRACKS_ON_TOP, newTracksOnTop)
+                .putBoolean(SETTINGS_ORDER_BY_GAME_ORDER, orderByGameOrder)
 
                 .putBoolean(ADVOPT_EXPLODING_ENTITIES, advExplodingEntities)
                 .putBoolean(ADVOPT_IGNORE_PITCH_RESTRICTIONS, advIgnorePitchRestrictions)

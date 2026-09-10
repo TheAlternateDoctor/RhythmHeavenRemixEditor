@@ -256,6 +256,7 @@ class RHREfreshApplication(logger: Logger, logToFile: File?)
         
         // preferences
         preferences = Gdx.app.getPreferences("RHREFRESH")
+        RHREfresh.PREFERENCES = preferences
         Toolboks.LOGGER.info("Loaded preferences")
         
         GlobalScope.launch {

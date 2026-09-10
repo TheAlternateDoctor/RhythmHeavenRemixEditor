@@ -4,6 +4,8 @@ import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.Disposable
+import io.github.chrislo27.rhrefresh.PreferenceKeys
+import io.github.chrislo27.rhrefresh.RHREfresh
 import io.github.chrislo27.rhrefresh.sfxdb.datamodel.Datamodel
 import io.github.chrislo27.rhrefresh.sfxdb.datamodel.DatamodelComparator
 import io.github.chrislo27.rhrefresh.sfxdb.datamodel.ResponseModel
@@ -14,9 +16,10 @@ import java.util.*
 data class Game(val id: String, val rawName: String, val series: Series,
                 val objects: List<Datamodel>,
                 val iconFh: FileHandle, val language: Language?, val group: String, val groupDefault: Boolean,
-                val priority: Int, val isCustom: Boolean, val noDisplay: Boolean, val searchHints: List<String>,
+                val priority: Int, val gameOrder: Int, val isCustom: Boolean, val noDisplay: Boolean, val searchHints: List<String>,
                 val jsonless: Boolean, val isSpecial: Boolean)
     : Disposable, Comparable<Game> {
+
 
     val name: String = if (language != null) "$rawName (${language.langName})" else rawName
     val lowerCaseName: String = name.toLowerCase(Locale.ROOT)
@@ -125,7 +128,7 @@ object GameGroupListComparatorIgnorePriority : Comparator<Game> {
 
 }
 
-object GameGroupListComparator : Comparator<Game> {
+object GameGroupListComparator: Comparator<Game> {
 
     override fun compare(o1: Game?, o2: Game?): Int {
         if (o1 == null && o2 == null) {
@@ -136,12 +139,27 @@ object GameGroupListComparator : Comparator<Game> {
             return 1
         }
 
-        // higher priorities are first
-        if (o1.priority > o2.priority) {
-            return -1
-        } else if (o2.priority > o1.priority) {
-            return 1
+        if(RHREfresh.PREFERENCES.getBoolean(PreferenceKeys.SETTINGS_ORDER_BY_GAME_ORDER)) {
+            // higher gameOrder are first
+            if ((o2.gameOrder == -1 && o1.gameOrder != -1)) {
+                return -1
+            } else if ((o1.gameOrder == -1 && o2.gameOrder != -1)) {
+                return 1
+            }
+            if (o1.gameOrder < o2.gameOrder) {
+                return -1
+            } else if (o2.gameOrder < o1.gameOrder) {
+                return 1
+            }
+        } else{
+            // higher priorities are first
+            if (o1.priority > o2.priority) {
+                return -1
+            } else if (o2.priority > o1.priority) {
+                return 1
+            }
         }
+
 
         if (o1.group == o2.group) {
             return when {

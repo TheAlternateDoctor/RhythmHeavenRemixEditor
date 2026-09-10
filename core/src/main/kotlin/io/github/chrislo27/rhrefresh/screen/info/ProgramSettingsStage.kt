@@ -383,6 +383,29 @@ class ProgramSettingsStage(parent: UIElement<InfoScreen>?, camera: OrthographicC
                 screenHeight = buttonHeight)
         }
 
+        // Ordering behaviour
+        settings.elements += TrueCheckbox(palette, settings, settings).apply {
+            this.checked = preferences.getBoolean(PreferenceKeys.SETTINGS_ORDER_BY_GAME_ORDER, true)
+
+            this.textLabel.apply {
+                this.fontScaleMultiplier = fontScale * 0.9f
+                this.isLocalizationKey = true
+                this.textWrapping = false
+                this.textAlign = Align.left
+                this.text = "screen.info.orderByGame"
+            }
+
+            this.checkedStateChanged = {
+                preferences.putBoolean(PreferenceKeys.SETTINGS_ORDER_BY_GAME_ORDER, it)
+                didChangeSettings = true
+            }
+
+            this.location.set(screenX = padding,
+                screenY = padding * 2 + buttonHeight * 1,
+                screenWidth = buttonWidth,
+                screenHeight = buttonHeight)
+        }
+
         // Clear recent games
         clearRecentsButton = Button(palette, settings, settings).apply {
             addLabel(TextLabel(palette, this, this.stage).apply {

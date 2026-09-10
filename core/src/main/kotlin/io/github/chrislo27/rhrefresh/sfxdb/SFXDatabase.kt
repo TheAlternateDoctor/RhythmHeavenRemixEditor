@@ -452,7 +452,7 @@ object SFXDatabase : Disposable {
                             Language.getOrUnknown(gameObject.language),
                             gameObject.group ?: gameObject.name,
                             gameObject.groupDefault,
-                            gameObject.priority, directive.isCustom, gameObject.noDisplay, gameObject.searchHints ?: listOf(),
+                            gameObject.priority, gameObject.gameOrder, directive.isCustom, gameObject.noDisplay, gameObject.searchHints ?: listOf(),
                             jsonless = false, isSpecial = gameObject.id in SPECIAL_IDS)
                 val baseFileHandle = directive.folder.parent()
 
@@ -478,7 +478,7 @@ object SFXDatabase : Disposable {
                             null,
                             nameWithoutExt,
                             true,
-                            0, true, false, listOf(), jsonless = true, isSpecial = id in SPECIAL_IDS)
+                            0, 0, true, false, listOf(), jsonless = true, isSpecial = id in SPECIAL_IDS)
 
                 val sfxList = directive.folder.list { fh ->
                     fh.isFile && fh.extension in RHREfresh.SUPPORTED_DECODING_SOUND_TYPES
@@ -571,7 +571,7 @@ object SFXDatabase : Disposable {
             val playalongObjs = mutableListOf<Datamodel>()
             val playalongGame = Game(PLAYALONG_GAME_ID, "Playalong Input Entities", specialGame.series,
                                      playalongObjs, Gdx.files.internal("images/gameicon/playable_entities.png"),
-                                     null, "Special Entities", false, specialGame.priority,
+                                     null, "Special Entities", false, specialGame.priority, specialGame.priority,
                                      false, specialGame.noDisplay, listOf("playable", "playing", "play-along"), false, true)
             checkGameDoesNotExist(PLAYALONG_GAME_ID)
             // Press
