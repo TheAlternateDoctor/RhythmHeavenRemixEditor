@@ -478,7 +478,7 @@ object SFXDatabase : Disposable {
                             null,
                             nameWithoutExt,
                             true,
-                            0, 0, true, false, listOf(), jsonless = true, isSpecial = id in SPECIAL_IDS)
+                            0, -1, true, false, listOf(), jsonless = true, isSpecial = id in SPECIAL_IDS)
 
                 val sfxList = directive.folder.list { fh ->
                     fh.isFile && fh.extension in RHREfresh.SUPPORTED_DECODING_SOUND_TYPES
